@@ -1,0 +1,76 @@
+{
+  "table4_proxy": [
+    {
+      "isp": "Comcast",
+      "units": 1125,
+      "latency_mean": 13.342038133333334,
+      "latency_std": 6.689783294318382,
+      "loss_mean_pct": 1.9295196376923622,
+      "loss_std_pct": 3.867470170008254
+    },
+    {
+      "isp": "AT&T",
+      "units": 1138,
+      "latency_mean": 25.998183216168716,
+      "latency_std": 14.326327476481392,
+      "loss_mean_pct": 1.805590550813644,
+      "loss_std_pct": 2.863028182956151
+    },
+    {
+      "isp": "TimeWarner",
+      "units": 1251,
+      "latency_mean": 21.01309784172662,
+      "latency_std": 10.308363260551666,
+      "loss_mean_pct": 1.7123456333405223,
+      "loss_std_pct": 3.469543129575444
+    },
+    {
+      "isp": "Verizon",
+      "units": 925,
+      "latency_mean": 20.078925405405407,
+      "latency_std": 12.656605100684295,
+      "loss_mean_pct": 1.3944991740177126,
+      "loss_std_pct": 2.566620723462982
+    },
+    {
+      "isp": "Cox",
+      "units": 603,
+      "latency_mean": 20.403190215588722,
+      "latency_std": 5.852767147237951,
+      "loss_mean_pct": 1.5955068838740452,
+      "loss_std_pct": 2.1900563094452674
+    },
+    {
+      "isp": "Qwest",
+      "units": 358,
+      "latency_mean": 42.54491759776536,
+      "latency_std": 13.967582744298351,
+      "loss_mean_pct": 2.4267657035847376,
+      "loss_std_pct": 3.1113518620805567
+    },
+    {
+      "isp": "Charter",
+      "units": 634,
+      "latency_mean": 25.27066782334385,
+      "latency_std": 11.088492550350756,
+      "loss_mean_pct": 1.5093439547879233,
+      "loss_std_pct": 2.3695189265982872
+    },
+    {
+      "isp": "Cablevision",
+      "units": 168,
+      "latency_mean": 10.337725595238096,
+      "latency_std": 2.278383442832767,
+      "loss_mean_pct": 0.8216661274017754,
+      "loss_std_pct": 1.4523529356460732
+    }
+  ],
+  "facebook_units": 7269,
+  "facebook_bytes_median": 156515.0,
+  "facebook_objects_median": 8.0,
+  "facebook_fetch_ms_median": 705.88,
+  "spearman_p95_fetch": -0.6579213171774788,
+  "spearman_baseline_fetch": 0.4287596806953209,
+  "spearman_p95_fetch_gt6": -0.2752641759389136,
+  "spearman_baseline_fetch_gt6": 0.24129516246025515
+}

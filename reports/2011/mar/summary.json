@@ -1,0 +1,235 @@
+{
+  "month": "mar",
+  "units_meta": 7377,
+  "units_down": 7250,
+  "units_up": 7253,
+  "active_down_gt100": 6301,
+  "active_up_gt100": 6301,
+  "jitter_nonnull": {
+    "jitter_up": 0,
+    "jitter_down": 0,
+    "latency": 0
+  },
+  "table2": [
+    {
+      "index": "AT&T",
+      "paper_total": 787,
+      "paper_active": 335,
+      "total": 1156,
+      "active_dl": 999,
+      "active_ul": 983
+    },
+    {
+      "index": "Cablevision",
+      "paper_total": 104,
+      "paper_active": 53,
+      "total": 169,
+      "active_dl": 148,
+      "active_ul": 147
+    },
+    {
+      "index": "Charter",
+      "paper_total": 187,
+      "paper_active": 51,
+      "total": 641,
+      "active_dl": 599,
+      "active_ul": 597
+    },
+    {
+      "index": "Comcast",
+      "paper_total": 864,
+      "paper_active": 560,
+      "total": 1135,
+      "active_dl": 1047,
+      "active_ul": 1046
+    },
+    {
+      "index": "Cox",
+      "paper_total": 381,
+      "paper_active": 161,
+      "total": 614,
+      "active_dl": 519,
+      "active_ul": 526
+    },
+    {
+      "index": "Qwest",
+      "paper_total": 265,
+      "paper_active": 117,
+      "total": 359,
+      "active_dl": 310,
+      "active_ul": 307
+    },
+    {
+      "index": "TimeWarner",
+      "paper_total": 690,
+      "paper_active": 381,
+      "total": 1270,
+      "active_dl": 1108,
+      "active_ul": 1093
+    },
+    {
+      "index": "Verizon",
+      "paper_total": 551,
+      "paper_active": 256,
+      "total": 943,
+      "active_dl": 749,
+      "active_ul": 791
+    }
+  ],
+  "isp_throughput": [
+    {
+      "isp": "Comcast",
+      "dl_units": 1047,
+      "dl_avg_p95": 0.9735160274542028,
+      "dl_p95_mbps": 15.0802252,
+      "dl_std": 1.1582098510300942,
+      "ul_units": 1046,
+      "ul_avg_p95": 0.9705697892480922,
+      "ul_p95_mbps": 3.0943313999999997,
+      "ul_std": 0.10941077674470204
+    },
+    {
+      "isp": "AT&T",
+      "dl_units": 999,
+      "dl_avg_p95": 0.9787187141870566,
+      "dl_p95_mbps": 5.1338376,
+      "dl_std": 0.2553862786343954,
+      "ul_units": 983,
+      "ul_avg_p95": 0.9786775132071209,
+      "ul_p95_mbps": 0.6638596,
+      "ul_std": 0.012314994568463649
+    },
+    {
+      "isp": "TimeWarner",
+      "dl_units": 1108,
+      "dl_avg_p95": 0.9627472502291841,
+      "dl_p95_mbps": 12.1097056,
+      "dl_std": 0.8511390221534361,
+      "ul_units": 1093,
+      "ul_avg_p95": 0.9769025808726428,
+      "ul_p95_mbps": 0.9723416,
+      "ul_std": 0.015320998635993177
+    },
+    {
+      "isp": "Verizon",
+      "dl_units": 749,
+      "dl_avg_p95": 0.9862831790899614,
+      "dl_p95_mbps": 20.4777944,
+      "dl_std": 0.5195677732369675,
+      "ul_units": 791,
+      "ul_avg_p95": 0.9946202271768354,
+      "ul_p95_mbps": 4.721672,
+      "ul_std": 0.022602428182548668
+    },
+    {
+      "isp": "Cox",
+      "dl_units": 519,
+      "dl_avg_p95": 0.9108806563130449,
+      "dl_p95_mbps": 19.4999608,
+      "dl_std": 2.6024480469771167,
+      "ul_units": 526,
+      "ul_avg_p95": 0.9596428788223426,
+      "ul_p95_mbps": 2.4984418,
+      "ul_std": 0.09193726805585822
+    },
+    {
+      "isp": "Qwest",
+      "dl_units": 310,
+      "dl_avg_p95": 0.9793857428549579,
+      "dl_p95_mbps": 5.8785288,
+      "dl_std": 0.2538039655647493,
+      "ul_units": 307,
+      "ul_avg_p95": 0.9713132494095241,
+      "ul_p95_mbps": 0.777336,
+      "ul_std": 0.02283126618569842
+    },
+    {
+      "isp": "Charter",
+      "dl_units": 599,
+      "dl_avg_p95": 0.9641226413193137,
+      "dl_p95_mbps": 14.5661788,
+      "dl_std": 1.3190297760284906,
+      "ul_units": 597,
+      "ul_avg_p95": 0.9858594428733616,
+      "ul_p95_mbps": 1.1068776,
+      "ul_std": 0.01941810786361828
+    },
+    {
+      "isp": "Cablevision",
+      "dl_units": 148,
+      "dl_avg_p95": 0.7229959656895859,
+      "dl_p95_mbps": 15.762998999999999,
+      "dl_std": 4.4004761643648305,
+      "ul_units": 147,
+      "ul_avg_p95": 0.9889211960783946,
+      "ul_p95_mbps": 2.1394480000000002,
+      "ul_std": 0.023738532319124678
+    }
+  ],
+  "table4": [
+    {
+      "isp": "Comcast",
+      "units": 1121,
+      "latency_mean": 16.04320133809099,
+      "latency_std": 8.831704385282888,
+      "loss_mean_pct": 0.8260777510510511,
+      "loss_std_pct": 2.3281817407294105
+    },
+    {
+      "isp": "AT&T",
+      "units": 1058,
+      "latency_mean": 27.398035160680532,
+      "latency_std": 14.936359209121518,
+      "loss_mean_pct": 1.0116280781140612,
+      "loss_std_pct": 2.0994193425672667
+    },
+    {
+      "isp": "TimeWarner",
+      "units": 1245,
+      "latency_mean": 21.77882313253012,
+      "latency_std": 10.661809316406677,
+      "loss_mean_pct": 0.8257730643941856,
+      "loss_std_pct": 2.1334840078175477
+    },
+    {
+      "isp": "Verizon",
+      "units": 909,
+      "latency_mean": 20.93619702970297,
+      "latency_std": 13.485567300548526,
+      "loss_mean_pct": 0.43027395457865375,
+      "loss_std_pct": 1.1422452674110553
+    },
+    {
+      "isp": "Cox",
+      "units": 386,
+      "latency_mean": 44.3291774611399,
+      "latency_std": 15.218637222720158,
+      "loss_mean_pct": 1.3321360706424505,
+      "loss_std_pct": 2.171106109615236
+    },
+    {
+      "isp": "Qwest",
+      "units": 358,
+      "latency_mean": 42.97443407821229,
+      "latency_std": 14.241209172671677,
+      "loss_mean_pct": 1.1755871810591232,
+      "loss_std_pct": 1.9275816073856293
+    },
+    {
+      "isp": "Charter",
+      "units": 5,
+      "latency_mean": 19.670800000000003,
+      "latency_std": 12.292503838518826,
+      "loss_mean_pct": 3.5608784809372573,
+      "loss_std_pct": 6.943990151119777
+    },
+    {
+      "isp": "Cablevision",
+      "units": 168,
+      "latency_mean": 11.018357738095238,
+      "latency_std": 3.9786769687593595,
+      "loss_mean_pct": 0.4841767595746611,
+      "loss_std_pct": 0.6634342957854559
+    }
+  ]
+}
