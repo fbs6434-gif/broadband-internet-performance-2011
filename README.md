@@ -48,3 +48,20 @@ outputs are gitignored; published figures and summary tables are under
 `reports/2011/`.
 
 See [src2011/README.md](src2011/README.md) for schema and timezone notes.
+
+## Multi-year extension (2011–2023)
+
+The `src_trends/` pipeline extends the gateway analysis to all 141 available
+FCC MBA raw months (2011–2023). It streams the tarballs from S3, computes
+per-unit monthly metrics, and writes the aggregate tables and report.
+
+```bash
+export TRENDS_CHUNK_ROWS=1000000
+python -m src_trends.run_all --workers 3
+python -m src_trends.aggregate
+python -m src_trends.report
+```
+
+Outputs are written to `output/trends/` and `reports/trends/`; both are
+gitignored except for the published report and figures under
+`reports/trends/`. S3 credentials are read from `.env` (or the environment).
