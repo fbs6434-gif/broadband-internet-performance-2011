@@ -11,6 +11,8 @@ reproduction (`where-congestion-occurs-2013`).
 
 **Full write-up, tables, and figures:** [reports/2011/REPORT.md](reports/2011/REPORT.md)
 
+**Paper-vs-reproduction comparison:** [reports/2011/fig14_original_vs_reproduced.png](reports/2011/fig14_original_vs_reproduced.png)
+
 ## Main findings
 
 - Download consistency (Avg/P95) is high for most ISPs but clearly lower for

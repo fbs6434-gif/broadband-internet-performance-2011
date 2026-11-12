@@ -18,6 +18,12 @@ The FCC raw data reproduces the paper's central empirical signatures:
 
 Not reproducible from FCC data: BISMark-only experiments (Figs. 5, 10, 14-16), first-hop last-mile latency (no traceroute), and jitter (the 2011 `curr_udpjitter` jitter columns are entirely empty).
 
+## Original vs reproduced
+
+![Original paper vs reproduced results](fig14_original_vs_reproduced.png)
+
+Grouped bars compare the paper's Table 2 active units, Table 4 latency and loss, and Fig. 8 diurnal drops with the FCC raw-data reproduction. Active-unit levels differ because the reproduction covers a larger, still-ramping deployment; latency and loss differ because the reproduction uses closest-target and end-to-end proxies rather than the paper's first-hop measurements.
+
 ## Data and deviations
 
 - Source: `s3://mba-data/fcc-mba/2011/raw/raw-bulk-data-{feb,mar}-2011.tar.gz`, plus `fcc-mba/2011/profile/` metadata.
@@ -176,6 +182,7 @@ python src2011/analyze.py --month mar
 python src2011/report.py --month feb
 python src2011/report.py --month mar
 python src2011/make_report.py
+python src2011/make_comparison.py
 ```
 
 Environment: Python 3.11, pandas 2.2.2, pyarrow 15.0.2, matplotlib 3.8.4, boto3. S3 credentials are read from `.env`; large data stays out of git.
@@ -189,3 +196,4 @@ Environment: Python 3.11, pandas 2.2.2, pyarrow 15.0.2, matplotlib 3.8.4, boto3.
 - `src2011/analyze.py`: throughput, PowerBoost, diurnal, latency, under-load.
 - `src2011/report.py`: figures, combined latency proxy, Facebook web analysis.
 - `src2011/make_report.py`: this report.
+- `src2011/make_comparison.py`: paper-vs-reproduction comparison figure.
