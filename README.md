@@ -11,7 +11,7 @@ reproduction (`where-congestion-occurs-2013`).
 
 **Full write-up, tables, and figures:** [reports/2011/REPORT.md](reports/2011/REPORT.md)
 
-**Paper-vs-reproduction comparison:** [reports/2011/fig14_original_vs_reproduced.png](reports/2011/fig14_original_vs_reproduced.png)
+**Paper-vs-reproduction comparison (Feb–Mar 2011 pooled):** [reports/2011/fig14_original_vs_reproduced.png](reports/2011/fig14_original_vs_reproduced.png)
 
 ## Main findings
 
@@ -19,8 +19,8 @@ reproduction (`where-congestion-occurs-2013`).
   **Cablevision** and **Cox**; upload consistency is uniformly high.
 - **PowerBoost** is visible only on cable ISPs (Comcast, TimeWarner, Cox,
   Charter), is flat for Cablevision, and is flat for DSL/FiOS.
-- Evening throughput drops are concentrated on **Cablevision (~45%)** and
-  **Cox (~21%)**.
+- Evening throughput drops are concentrated on **Cablevision (~44%)** and
+  **Cox (~24%)** in the pooled Feb–Mar window.
 - **Latency under load** inflates 15–37× on the uplink versus 1.4–11× on the
   downlink.
 - Web fetch time falls with throughput (saturating above ~6 Mbit/s) and rises

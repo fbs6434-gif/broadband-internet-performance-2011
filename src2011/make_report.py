@@ -218,7 +218,7 @@ Not reproducible from FCC data: BISMark-only experiments (Figs. 5, 10, 14-16), f
 
 ![Original paper vs reproduced results](fig14_original_vs_reproduced.png)
 
-Grouped bars compare the paper's Table 2 active units, Table 4 latency and loss, and Fig. 8 diurnal drops with the FCC raw-data reproduction. Active-unit levels differ because the reproduction covers a larger, still-ramping deployment; latency and loss differ because the reproduction uses closest-target and end-to-end proxies rather than the paper's first-hop measurements.
+Grouped bars compare the paper's Table 2 active units, Table 4 latency and loss, and Fig. 8 diurnal drops with the FCC raw-data reproduction. The reproduction pools all February and March 2011 measurements into a single window to mirror the paper's two-calendar-month window. Active-unit levels still differ because the reproduction covers a larger, still-ramping deployment; latency and loss differ because the reproduction uses closest-target and end-to-end proxies rather than the paper's first-hop measurements.
 
 ## Data and deviations
 
