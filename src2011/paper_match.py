@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from common import ISP8, add_local_time, is_mlab, load_meta, load_tz, parquet
+from common import ISP8, is_mlab, load_meta, parquet
 
 ROOT = Path(__file__).resolve().parents[1]
 REPORTS = ROOT / "reports" / "2011"
@@ -39,8 +39,6 @@ PAPER_T4 = {
     "Qwest": (39.42, 0.33),
     "Cablevision": (10.21, 0.33),
 }
-PAPER_TOD = {"Cablevision": 40.0, "Cox": 20.0}
-
 COLORS = {"paper": "#6c757d", "matched": "#1f77b4"}
 LABELS = {"paper": "Paper (14 Dec-14 Jan)", "matched": "Matched (1 Feb-3 Mar)"}
 
@@ -175,19 +173,6 @@ def loss_table(meta):
     return t
 
 
-def tod_table(down, meta, tz):
-    d = down.merge(meta[["unit_id", "isp"]], on="unit_id", how="inner")
-    d = add_local_time(d, tz, "mar")
-    p95 = d.groupby("unit_id")["mbps"].quantile(0.95).rename("p95")
-    d = d.merge(p95, on="unit_id")
-    d = d[d["p95"] > 0].copy()
-    d["norm"] = d["mbps"] / d["p95"]
-    uh = d.groupby(["unit_id", "isp", "local_hour"])["norm"].mean().reset_index()
-    hh = uh.groupby(["isp", "local_hour"])["norm"].mean().unstack()
-    drop = 100.0 * (1.0 - hh[20] / hh[3])
-    return drop
-
-
 def style(ax, title, ylabel, isps, rotate=25):
     ax.set_title(title, fontsize=11, fontweight="bold")
     ax.set_ylabel(ylabel, fontsize=9)
@@ -230,12 +215,10 @@ def main():
     args = ap.parse_args()
 
     meta = load_meta()
-    tz = load_tz()
     down = load_down()
     active = active_table(down, meta)
     latency = latency_table(meta)
     loss = loss_table(meta)
-    tod = tod_table(down, meta, tz)
 
     isps = ISP8
     paper_active = {i: PAPER_T2[i][1] for i in isps}
@@ -244,10 +227,8 @@ def main():
     repro_lat = latency["repro_latency"].to_dict()
     paper_loss = {i: PAPER_T4[i][1] for i in isps}
     repro_loss = loss["repro_loss"].to_dict()
-    paper_tod = PAPER_TOD
-    repro_tod = tod.loc[["Cablevision", "Cox"]].to_dict()
 
-    fig, axes = plt.subplots(2, 2, figsize=(13.5, 9.5))
+    fig, axes = plt.subplots(1, 3, figsize=(18.0, 5.8))
     fig.suptitle(
         "Paper-matched reproduction: 31-day window, paper metrics, closest target",
         fontsize=14,
@@ -255,32 +236,16 @@ def main():
         y=0.985,
     )
 
-    grouped(axes[0, 0], paper_active, repro_active, isps, "{:.0f}")
-    style(axes[0, 0], "(a) Active units (>100 download tests)", "Active units", isps)
-    axes[0, 0].legend(frameon=False, fontsize=9)
+    grouped(axes[0], paper_active, repro_active, isps, "{:.0f}")
+    style(axes[0], "(a) Active units (>100 download tests)", "Active units", isps)
+    axes[0].legend(frameon=False, fontsize=9)
 
-    grouped(axes[0, 1], paper_lat, repro_lat, isps)
-    style(axes[0, 1], "(b) Mean latency to closest available target", "Latency (ms)", isps)
-    axes[0, 1].legend(frameon=False, fontsize=9)
+    grouped(axes[1], paper_lat, repro_lat, isps)
+    style(axes[1], "(b) Mean latency to closest available target", "Latency (ms)", isps)
+    axes[1].legend(frameon=False, fontsize=9)
 
-    grouped(axes[1, 0], paper_loss, repro_loss, isps, "{:.2f}")
-    style(axes[1, 0], "(c) Mean end-to-end UDP loss", "Loss (%)", isps)
-
-    grouped(
-        axes[1, 1],
-        paper_tod,
-        repro_tod,
-        ["Cablevision", "Cox"],
-        "{:.1f}",
-    )
-    style(
-        axes[1, 1],
-        "(d) Evening throughput drop (20:00 vs 03:00)",
-        "Drop (%)",
-        ["Cablevision", "Cox"],
-        rotate=0,
-    )
-    axes[1, 1].legend(frameon=False, fontsize=9)
+    grouped(axes[2], paper_loss, repro_loss, isps, "{:.2f}")
+    style(axes[2], "(c) Mean end-to-end UDP loss", "Loss (%)", isps)
 
     fig.text(
         0.5,
@@ -289,13 +254,13 @@ def main():
         "Active: >100 M-Lab download tests. Latency: mean ICMP RTT to the closest ISP "
         "target with >100 pings; first-hop/traceroute is unavailable, so this is an "
         "upper bound. Loss: end-to-end UDP to M-Lab, >100 packets, per-unit aggregate "
-        "(the paper's target). Diurnal: local 20:00 vs 03:00.",
+        "(the paper's target).",
         ha="center",
         va="bottom",
         fontsize=8,
         color="#444444",
     )
-    fig.tight_layout(rect=(0, 0.04, 1, 0.95))
+    fig.tight_layout(rect=(0, 0.06, 1, 0.93))
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(args.out, dpi=180, bbox_inches="tight")
     print(f"wrote {args.out}")
@@ -317,8 +282,6 @@ def main():
         },
         index=isps,
     )
-    out["paper_drop_pct"] = [PAPER_TOD.get(i, np.nan) for i in isps]
-    out["repro_drop_pct"] = [tod.get(i, np.nan) for i in isps]
     Path(args.csv).parent.mkdir(parents=True, exist_ok=True)
     out.to_csv(args.csv, float_format="%.4f")
     print(f"wrote {args.csv}")

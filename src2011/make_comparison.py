@@ -51,8 +51,6 @@ PAPER_LOSS = {
     "Cablevision": 0.33,
 }
 
-PAPER_TOD = {"Cablevision": 40.0, "Cox": 20.0}
-
 COLORS = {"paper": "#6c757d", "pooled": "#1f77b4"}
 LABELS = {
     "paper": "Paper (Dec 2010-Jan 2011)",
@@ -121,21 +119,6 @@ def pooled_latency_loss():
     return latency, loss
 
 
-def pooled_tod(isp):
-    frames = []
-    for month in MONTHS:
-        d = read(month, "tod_throughput.csv")
-        frames.append(d[["isp", "local_hour", "mean", "count"]])
-    d = pd.concat(frames, ignore_index=True)
-    d["_w"] = d["mean"] * d["count"]
-    g = d.groupby(["isp", "local_hour"], as_index=False).agg(
-        _w=("_w", "sum"), count=("count", "sum")
-    )
-    g["mean"] = g["_w"] / g["count"]
-    p = g[g["isp"] == isp].set_index("local_hour")["mean"]
-    return float(100.0 * (1.0 - p[20] / p[3]))
-
-
 def style(ax, title, ylabel, isps, rotate=25):
     ax.set_title(title, fontweight="bold", pad=10)
     ax.set_ylabel(ylabel)
@@ -159,42 +142,31 @@ def grouped(ax, values, isps):
 def main():
     active = pooled_active()
     latency, loss = pooled_latency_loss()
-    diurnal_isps = ["Cablevision", "Cox"]
-    diurnal = {isp: pooled_tod(isp) for isp in diurnal_isps}
 
     active_values = {"paper": PAPER_ACTIVE, "pooled": active}
     latency_values = {"paper": PAPER_LATENCY, "pooled": latency}
     loss_values = {"paper": PAPER_LOSS, "pooled": loss}
-    diurnal_values = {
-        "paper": PAPER_TOD,
-        "pooled": diurnal,
-    }
 
-    fig, axes = plt.subplots(2, 2, figsize=(13.5, 9.5))
+    fig, axes = plt.subplots(1, 3, figsize=(18.0, 5.8))
     fig.suptitle(
         "2011 SIGCOMM gateway results: original paper vs Feb-Mar 2011 reproduction",
         fontsize=15, fontweight="bold", y=0.985,
     )
 
-    grouped(axes[0, 0], active_values, ISPS)
-    style(axes[0, 0], "(a) Active units by ISP", "Active units", ISPS)
-    axes[0, 0].legend(frameon=False, fontsize=9)
+    grouped(axes[0], active_values, ISPS)
+    style(axes[0], "(a) Active units by ISP", "Active units", ISPS)
+    axes[0].legend(frameon=False, fontsize=9)
 
-    grouped(axes[0, 1], latency_values, ISPS)
-    style(axes[0, 1], "(b) Baseline latency by ISP", "Latency (ms)", ISPS)
+    grouped(axes[1], latency_values, ISPS)
+    style(axes[1], "(b) Baseline latency by ISP", "Latency (ms)", ISPS)
 
-    grouped(axes[1, 0], loss_values, ISPS)
-    style(axes[1, 0], "(c) Mean loss by ISP", "Loss (%)", ISPS)
-
-    grouped(axes[1, 1], diurnal_values, diurnal_isps)
-    style(axes[1, 1], "(d) Evening throughput drop (20:00 vs 03:00)",
-          "Drop (%)", diurnal_isps, rotate=0)
-    axes[1, 1].legend(frameon=False, fontsize=9)
+    grouped(axes[2], loss_values, ISPS)
+    style(axes[2], "(c) Mean loss by ISP", "Loss (%)", ISPS)
 
     fig.text(
         0.5, 0.005,
-        "Paper: Table 2 (active units), Table 4 (latency, loss), Fig. 8 text "
-        "(Cablevision ~40%, Cox ~20%). Reproduction pools all February and "
+        "Paper: Table 2 (active units), Table 4 (latency, loss). "
+        "Reproduction pools all February and "
         "March 2011 measurements into one window to mirror the paper's "
         "two-calendar-month window. Reproduced latency and loss are "
         "closest-target/e2e proxies, not the paper's first-hop metric; "
@@ -202,14 +174,13 @@ def main():
         ha="center", va="bottom", fontsize=8.5, color="#444444",
     )
 
-    fig.tight_layout(rect=(0, 0.045, 1, 0.965))
+    fig.tight_layout(rect=(0, 0.07, 1, 0.94))
     OUT.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(OUT, dpi=180, bbox_inches="tight")
     print(OUT)
     print("pooled active", active)
     print("pooled latency", latency)
     print("pooled loss", loss)
-    print("pooled diurnal", diurnal)
 
 
 if __name__ == "__main__":
