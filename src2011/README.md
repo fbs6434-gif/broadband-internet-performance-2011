@@ -18,6 +18,7 @@ python src2011/report.py  --month feb    # figures, web analysis
 python src2011/report.py  --month mar
 python src2011/make_report.py            # output/2011/REPORT.md
 python src2011/publish.py                # copy report/figures/tables to reports/2011
+python src2011/paper_match.py            # paper-matched 31-day comparison + CSV
 ```
 
 `download.py` reads S3 credentials from the repository `.env`.
@@ -35,3 +36,7 @@ figures and summary tables live under `reports/2011/`.
   March, so Table 5 is not reproducible from this release.
 - Last-mile latency is unavailable (no traceroute); the report uses ISP-hosted
   and M-Lab ICMP baselines as proxies.
+- `paper_match.py` uses the paper's 31-day window length, >100-test active rule,
+  and end-to-end UDP loss target. It emits `fig14_paper_matched.png` and
+  `paper_matched_metrics.csv`; latency remains an upper-bound closest-target
+  proxy because first-hop traceroute is not in the FCC release.

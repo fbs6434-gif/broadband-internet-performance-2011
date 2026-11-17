@@ -208,7 +208,7 @@ The FCC raw data reproduces the paper's central empirical signatures:
 
 - **Download consistency (Avg/P95)** is high for most ISPs but visibly lower for **Cablevision** and **Cox**; upload consistency is high across all ISPs (paper Fig. 7).
 - **PowerBoost** appears only on cable ISPs: normalized throughput falls over the 30 s test for Comcast, TimeWarner, Cox and Charter, is flat for Cablevision, and is flat for DSL/FiOS (paper Fig. 9).
-- **Diurnal degradation** is concentrated on Cablevision (~45% evening drop) and Cox (~20-30%), with small effects elsewhere (paper Fig. 8).
+- **Diurnal degradation** is concentrated on Cablevision (~45% evening drop) and Cox (~20-30%), with small effects elsewhere (paper Fig. 8; separate two-ISP analysis, not part of the headline comparison).
 - **Latency under load** inflates much more on the uplink than the downlink, across all ISPs (paper Fig. 13).
 - **Web fetch time** falls with download throughput and rises with baseline latency; the throughput effect saturates above ~6 Mbit/s (paper Fig. 11).
 
@@ -216,9 +216,28 @@ Not reproducible from FCC data: BISMark-only experiments (Figs. 5, 10, 14-16), f
 
 ## Original vs reproduced
 
+### Paper-matched comparison
+
+![Paper-matched comparison](fig14_paper_matched.png)
+
+This is the primary comparison. It follows the paper's definitions as closely as the public FCC release allows:
+
+- **Window:** 1 Feb-3 Mar 2011 (31 days), matching the length of the paper's 14 Dec 2010-14 Jan 2011 window. The paper's exact months are not in the public bulk release.
+- **Active units:** more than 100 M-Lab download throughput tests in the window (paper Table 2 definition).
+- **Sample filter:** only units with more than 100 measurements for the metric being reported (the paper's rule); only the eight ISPs with the most gateways.
+- **Loss:** end-to-end UDP to M-Lab, aggregated per unit and then averaged across units. This is the paper's SamKnows loss metric (Table 3), not a last-mile or edge-loss proxy.
+- **Latency:** mean ICMP RTT to the closest available ISP target with more than 100 pings. The paper used traceroute to the first non-NAT hop; that is unavailable, so this is an upper bound on last-mile latency.
+- **Evening drop:** omitted from the headline comparison because it covers only Cablevision and Cox; the separate Fig. 8 analog remains below.
+
+Machine-readable results: [`paper_matched_metrics.csv`](paper_matched_metrics.csv).
+
+The 31-day window and paper definitions bring loss much closer to the paper (for example, Cox 1.23% vs 1.11%, Comcast 0.48% vs 0.27%). Latency cannot be validated directly: the closest-target mean is an upper bound, and the paper's first-hop values generally fall between the minimum-target and mean-target estimates. Active counts remain higher because the FCC deployment is larger; active share is the fairer comparison.
+
+### Earlier pooled comparison
+
 ![Original paper vs reproduced results](fig14_original_vs_reproduced.png)
 
-Grouped bars compare the paper's Table 2 active units and Table 4 latency and loss with the FCC raw-data reproduction. The reproduction pools all February and March 2011 measurements into a single window to mirror the paper's two-calendar-month window. Active-unit levels still differ because the reproduction covers a larger, still-ramping deployment; latency and loss differ because the reproduction uses closest-target and end-to-end proxies rather than the paper's first-hop measurements.
+This earlier version pools all February and March 2011 measurements and uses e2e-first loss plus a minimum edge/e2e latency baseline. It is retained for comparison, but the paper-matched figure above is the more faithful one.
 
 ## Data and deviations
 
@@ -226,7 +245,8 @@ Grouped bars compare the paper's Table 2 active units and Table 4 latency and lo
 - Window: **February 2011** (primary) and **March 2011** (stability). The paper used **14 Dec 2010 - 14 Jan 2011**; those raw bulk files are not part of the public MBA bulk release used here.
 - `dtime` is UTC. Local hour is reconstructed with `unit_tz.csv` (and the 13 Mar 2011 DST switch for March).
 - Throughput tests are filtered to **Measurement Lab** targets, matching the paper. Each test emits six cumulative 5 s snapshots (`sequence` 0-5). Per-test throughput is the final snapshot; per-interval throughput is `delta(bytes_total) / delta(fetch_time)`.
-- "Active" means **more than 100 download tests** in the month.
+- "Active" means **more than 100 M-Lab download tests** in the analysis window (per month for the monthly tables; 31-day Feb-Mar window for the paper-matched comparison).
+- The paper-matched comparison uses **1 Feb-3 Mar 2011** (31 days) to match the paper's 31-day window length; the monthly tables use whole calendar months.
 - The FCC deployment grew during this period; February has fewer reporting units than March.
 
 {md_table(cov)}
@@ -301,9 +321,9 @@ Facebook fetch time is strongly negatively correlated with download throughput a
 | Fig. 12 | Baseline latency distribution | proxy | `fig12_baseline_latency.png`; closest-path proxy. |
 | Fig. 13 | Latency under load | yes | `fig13_under_load.png`; end-to-end, which is what the paper used for SamKnows. |
 | Fig. 14-16 | Modem buffer experiments | no | BISMark-only. |
-| Table 2 | ISPs, units, active units | yes | Different window; larger deployment. |
+| Table 2 | ISPs, units, active units | yes | Different window; paper-matched 31-day comparison in `fig14_paper_matched.png`; larger deployment. |
 | Table 3 | Measurement descriptions | yes | Mapping documented in `src2011/common.py`. |
-| Table 4 | Last-mile latency and loss | proxy | No traceroute; proxy in `table4_proxy.csv`. |
+| Table 4 | Last-mile latency and loss | proxy | No traceroute; paper-matched e2e UDP loss + closest-target latency in `fig14_paper_matched.png`. |
 | Table 5 | Down/up jitter | no | Jitter columns empty in the 2011 release. |
 
 ## Reproduce
